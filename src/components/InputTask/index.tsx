@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {IconButton, TextField} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -14,10 +14,17 @@ interface InputTaskProps {
 }
 
 const InputTask: React.FC<InputTaskProps> = ({id, title, onDone, onEdited, onRemoved}) => {
-    
+
     const [checked, setChecked] = useState(false);
     const [edit, setEdit] = useState(false);
     const [value, setValue] = useState(title);
+    const editInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        if (edit) {
+            editInputRef?.current?.focus();
+        }
+    }, [edit]);
 
     const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(e.target.checked);
@@ -49,6 +56,7 @@ const InputTask: React.FC<InputTaskProps> = ({id, title, onDone, onEdited, onRem
                 />
                 {edit ? (
                     <TextField
+                        ref={editInputRef}
                         className={styles.inputTaskInput}
                         variant="filled"
                         size="small"
