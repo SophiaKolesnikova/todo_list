@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {IconButton, TextField} from "@mui/material";
+import React, { useEffect, useRef, useState } from 'react';
+import { IconButton, TextField } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CheckIcon from '@mui/icons-material/Check';
@@ -8,9 +8,9 @@ import styles from './index.module.scss';
 interface InputTaskProps {
     id: string,
     title: string,
-    onDone: (id: string) => void,
+    onDone: (id: string, completed: boolean) => void,
     onEdited: (id: string, title: string) => void,
-    onRemoved: (id: string) => void
+    onRemoved: (id: string) => void,
 }
 
 const InputTask: React.FC<InputTaskProps> = ({id, title, onDone, onEdited, onRemoved}) => {
@@ -29,7 +29,7 @@ const InputTask: React.FC<InputTaskProps> = ({id, title, onDone, onEdited, onRem
     const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(e.target.checked);
         if (e.target.checked) {
-            onDone(id)
+            onDone(id, checked)
         }
     };
 
@@ -65,7 +65,10 @@ const InputTask: React.FC<InputTaskProps> = ({id, title, onDone, onEdited, onRem
                         onKeyDown={handleOnKeyDown}
                     />
                 ) : (
-                    <h3 className={styles.inputTaskTitle}>{title}</h3>
+                    <h3
+                        className={styles.inputTaskTitle}
+                        style={checked ? {textDecoration: 'line-through'} : {textDecoration: 'none'}}
+                    >{title}</h3>
                 )}
             </label>
             {edit ? (

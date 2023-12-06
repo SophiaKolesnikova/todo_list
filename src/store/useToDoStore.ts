@@ -13,7 +13,7 @@ interface ToDoStore {
     tasks: Task[],
     createTask: (title: string) => void,
     updateTask: (id: string, title: string) => void,
-    toggleTask: (id: string) => void,
+    toggleTask: (id: string, completed: boolean) => void,
     removeTask: (id: string) => void,
 }
 
@@ -51,7 +51,7 @@ export const useToDoStore = create<ToDoStore>(localStorageUpdate((set, get) => (
             id: generateId(),
             title,
             created: Date.now(),
-            completed: false
+            completed: false,
         }
         set({
             tasks: [newTask].concat(tasks)
@@ -66,13 +66,19 @@ export const useToDoStore = create<ToDoStore>(localStorageUpdate((set, get) => (
             }))
         })
     },
-    toggleTask: () => {
-
+    toggleTask: (id: string, completed: boolean) => {
+        const {tasks} = get();
+        set({
+            tasks: tasks.filter((task) => ({
+                completed: task.id === id ? completed : !task.completed,
+            }))
+        })
     },
     removeTask: (id: string) => {
         const {tasks} = get();
         set({
             tasks: tasks.filter((task) => task.id !== id)
         })
-    }
+    },
 })));
+

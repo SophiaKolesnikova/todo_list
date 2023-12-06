@@ -21,7 +21,6 @@ const App: React.FC = () => {
         state.toggleTask
     ]);
 
-
     return (
         <Box className={styles.app}>
             <h1 className={styles.appTitle}>To Do App</h1>
@@ -35,7 +34,7 @@ const App: React.FC = () => {
             {!tasks.length && (
                 <p className={styles.appText}>There is no task.</p>
             )}
-            {tasks.map((task) => (
+            {tasks?.map((task) => (
                 <InputTask
                     key={task.id}
                     id={task.id}
@@ -47,6 +46,6 @@ const App: React.FC = () => {
             ))}
         </Box>
     )
-}
+};
 
-export default App
+export default App;
