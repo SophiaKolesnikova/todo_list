@@ -8,7 +8,7 @@ import styles from './index.module.scss';
 interface InputTaskProps {
     id: string,
     title: string,
-    onDone: (id: string) => void,
+    onDone: (id: string, completed: boolean) => void,
     onEdited: (id: string, title: string) => void,
     onRemoved: (id: string) => void,
 }
@@ -29,9 +29,13 @@ const InputTask: React.FC<InputTaskProps> = ({id, title, onDone, onEdited, onRem
     const handleCheckbox = (e: React.ChangeEvent<HTMLInputElement>) => {
         setChecked(e.target.checked);
         if (e.target.checked) {
+<<<<<<< HEAD
             setTimeout(() =>{
                 onDone(id);
             }, 500);
+=======
+            onDone(id, checked)
+>>>>>>> b823e703b6f32e0400ea5b73d673223a3bc6ef29
         }
     };
 

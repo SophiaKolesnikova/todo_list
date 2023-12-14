@@ -13,6 +13,10 @@ interface ToDoStore {
     tasks: Task[],
     createTask: (title: string) => void,
     updateTask: (id: string, title: string) => void,
+<<<<<<< HEAD
+=======
+    toggleTask: (id: string, completed: boolean) => void,
+>>>>>>> b823e703b6f32e0400ea5b73d673223a3bc6ef29
     removeTask: (id: string) => void,
 }
 
@@ -50,6 +54,10 @@ export const useToDoStore = create<ToDoStore>()(devtools(localStorageUpdate((set
             id: generateId(),
             title,
             created: Date.now(),
+<<<<<<< HEAD
+=======
+            completed: false,
+>>>>>>> b823e703b6f32e0400ea5b73d673223a3bc6ef29
         }
         set({
             tasks: [newTask].concat(tasks)
@@ -64,11 +72,26 @@ export const useToDoStore = create<ToDoStore>()(devtools(localStorageUpdate((set
             }))
         })
     },
+<<<<<<< HEAD
+=======
+    toggleTask: (id: string, completed: boolean) => {
+        const {tasks} = get();
+        set({
+            tasks: tasks.filter((task) => ({
+                completed: task.id === id ? completed : !task.completed,
+            }))
+        })
+    },
+>>>>>>> b823e703b6f32e0400ea5b73d673223a3bc6ef29
     removeTask: (id: string) => {
         const {tasks} = get();
         set({
             tasks: tasks.filter((task) => task.id !== id)
         })
     },
+<<<<<<< HEAD
 }))));
+=======
+})));
+>>>>>>> b823e703b6f32e0400ea5b73d673223a3bc6ef29
 
