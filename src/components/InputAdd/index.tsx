@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from 'react';
-import { Button, TextField } from "@mui/material";
+import React, {useCallback, useState} from 'react';
+import {Button, TextField} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import styles from './index.module.scss';
 
@@ -15,7 +15,7 @@ const InputAdd: React.FC<InputAddProps> = ({onAdd}) => {
     }, [inputValue]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.target.value)
+        setInputValue(e.target.value);
     };
 
     const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -24,8 +24,6 @@ const InputAdd: React.FC<InputAddProps> = ({onAdd}) => {
         }
     };
 
-
-
     return (
         <div className={styles.inputAdd}>
             <TextField
@@ -33,7 +31,7 @@ const InputAdd: React.FC<InputAddProps> = ({onAdd}) => {
                 value={inputValue}
                 onChange={handleChange}
                 onKeyDown={handleOnKeyDown}
-                placeholder='Type here...'
+                placeholder='Create task...'
             />
             <Button
                 className={styles.inputAddButton}

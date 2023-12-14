@@ -1,19 +1,18 @@
-import {create, State, StateCreator} from 'zustand';
-import {generateId} from "../helpers.ts";
+import { create, State, StateCreator } from 'zustand';
+import { generateId } from "../helpers.ts";
+import {devtools} from "zustand/middleware";
 
 
 interface Task {
     id: string,
     title: string,
     created: number,
-    completed: boolean
 }
 
 interface ToDoStore {
     tasks: Task[],
     createTask: (title: string) => void,
     updateTask: (id: string, title: string) => void,
-    toggleTask: (id: string) => void,
     removeTask: (id: string) => void,
 }
 
@@ -43,7 +42,7 @@ const getCurrentState = () => {
 };
 
 
-export const useToDoStore = create<ToDoStore>(localStorageUpdate((set, get) => ({
+export const useToDoStore = create<ToDoStore>()(devtools(localStorageUpdate((set, get) => ({
     tasks: getCurrentState(),
     createTask: (title: string) => {
         const {tasks} = get();
@@ -51,7 +50,6 @@ export const useToDoStore = create<ToDoStore>(localStorageUpdate((set, get) => (
             id: generateId(),
             title,
             created: Date.now(),
-            completed: false
         }
         set({
             tasks: [newTask].concat(tasks)
@@ -66,13 +64,11 @@ export const useToDoStore = create<ToDoStore>(localStorageUpdate((set, get) => (
             }))
         })
     },
-    toggleTask: () => {
-
-    },
     removeTask: (id: string) => {
         const {tasks} = get();
         set({
             tasks: tasks.filter((task) => task.id !== id)
         })
-    }
-})));
+    },
+}))));
+

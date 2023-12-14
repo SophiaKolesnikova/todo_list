@@ -12,15 +12,12 @@ const App: React.FC = () => {
         createTask,
         updateTask,
         removeTask,
-        toggleTask
     ] = useToDoStore(state => [
         state.tasks,
         state.createTask,
         state.updateTask,
         state.removeTask,
-        state.toggleTask
     ]);
-
 
     return (
         <Box className={styles.app}>
@@ -35,18 +32,18 @@ const App: React.FC = () => {
             {!tasks.length && (
                 <p className={styles.appText}>There is no task.</p>
             )}
-            {tasks.map((task) => (
+            {tasks?.map((task) => (
                 <InputTask
                     key={task.id}
                     id={task.id}
                     title={task.title}
-                    onDone={toggleTask}
+                    onDone={removeTask}
                     onEdited={updateTask}
                     onRemoved={removeTask}
                 />
             ))}
         </Box>
     )
-}
+};
 
-export default App
+export default App;
