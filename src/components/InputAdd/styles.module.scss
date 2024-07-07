@@ -5,16 +5,14 @@
   align-items: center;
   padding-bottom: 20px;
   border-bottom: 2px solid lightgray;
+  gap: 10px;
 
   &Input {
-    width: 550px;
-    height: 50px;
+    width: 100%;
   }
 
   &Button {
-    top: 3px;
     height: 56px;
-    margin: 20px;
   }
 }
 

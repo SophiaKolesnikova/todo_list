@@ -1,0 +1,49 @@
+.calendar {
+  text-align: center;
+  margin: 20px;
+
+  &Header {
+    background: cornflowerblue;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+  }
+
+  &Days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 10px;
+    list-style: none;
+    padding: 0;
+
+    .dayItem {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      line-height: 30px;
+      margin: 5px;
+      background-color: #f0f0f0;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+  }
+}
+
+
+@media (max-width: 600px) {
+  .calendar {
+    &Days {
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 5px;
+    }
+  }
+}
+
+@media (max-width: 490px) {
+  .calendar {
+    &Days {
+      grid-template-columns: repeat(7, 1fr);
+      grid-gap: 3px;
+    }
+  }
+}

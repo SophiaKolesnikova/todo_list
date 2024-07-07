@@ -1,0 +1,33 @@
+.app {
+  max-width: 600px;
+  background: white;
+  border-radius: 20px;
+  padding: 20px 55px 45px;
+
+  &Title {
+    font-size: 40px;
+    font-weight: normal;
+    margin-bottom: 0.3em;
+    text-align: center;
+  }
+
+  .tasksList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 5px;
+    padding: 0;
+    gap: 5px;
+
+    .taskItem {
+      list-style: none;
+    }
+  }
+}
+
+@media (max-width: 490px) {
+  .app {
+    padding: 10px;
+    max-width: 400px;
+  }
+}

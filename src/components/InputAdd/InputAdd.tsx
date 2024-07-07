@@ -1,7 +1,7 @@
 import React, {useCallback, useState} from 'react';
 import {Button, TextField} from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
-import styles from './index.module.scss';
+import styles from './styles.module.scss';
 
 interface InputAddProps{
     onAdd: (title: string) => void,
@@ -25,7 +25,7 @@ const InputAdd: React.FC<InputAddProps> = ({onAdd}) => {
     };
 
     return (
-        <div className={styles.inputAdd}>
+        <section className={styles.inputAdd}>
             <TextField
                 className={styles.inputAddInput}
                 value={inputValue}
@@ -39,7 +39,7 @@ const InputAdd: React.FC<InputAddProps> = ({onAdd}) => {
                 startIcon={<AddIcon/>}
                 onClick={addTask}
             >Add</Button>
-        </div>
+        </section>
     );
 };
 
