@@ -49,7 +49,7 @@ const Calendar: React.FC<CalendarProps> = ({ onClick, tasks }) => {
                 >
                     <ArrowBackIosIcon/>
                 </IconButton>
-                <h2 className={styles.calendarTitle}>{date.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })}</h2>
+                <h2 className={styles.calendarTitle}>{date.toLocaleDateString('en-EN', { month: 'long', year: 'numeric' })}</h2>
                 <IconButton
                     aria-label="Arrow-next"
                     color="inherit"
