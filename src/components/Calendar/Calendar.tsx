@@ -1,22 +1,66 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {IconButton} from "@mui/material";
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import styles from './styles.module.scss';
+import {Tasks} from "../../store/useCalendarStore.ts";
 
 interface CalendarProps {
-    month: number;
-    year: number;
-    onClick: (day: number) => void;
+    onClick: (day: string) => void;
+    tasks: Tasks;
 }
 
-const Calendar: React.FC<CalendarProps> = ({ month, year, onClick }) => {
-    const daysInMonth = new Date(year, month, 0).getDate();
-    const daysArray = Array.from(Array(daysInMonth), (_, index) => index + 1);
+const Calendar: React.FC<CalendarProps> = ({ onClick, tasks }) => {
+    const [date, setDate] = useState(new Date());
+
+    const handlePrevMonth = () => {
+        setDate(new Date(date.getFullYear(), date.getMonth() - 1, 1));
+    };
+
+    const handleNextMonth = () => {
+        setDate(new Date(date.getFullYear(), date.getMonth() + 1, 1));
+    };
+
+    const getDaysInMonth = (year: number, month: number) => {
+        return new Date(year, month + 1, 0).getDate();
+    };
+
+    const daysArray = Array.from(
+        { length: getDaysInMonth(date.getFullYear(), date.getMonth())},
+        (_, i) => {
+            const day = i + 1;
+            const dateString = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+            return { day, dateString };
+        }
+    );
+
+    const dayHasTasks = (dateString: string) => {
+        return tasks[dateString] && tasks[dateString].length > 0;
+    };
+
 
     return (
         <section className={styles.calendar}>
-            <h2 className={styles.calendarHeader}>{`${month}/${year}`}</h2>
+            <div className={styles.calendarHeader}>
+                <IconButton
+                    aria-label="Arrow-back"
+                    color="inherit"
+                    onClick={handlePrevMonth}
+                >
+                    <ArrowBackIosIcon/>
+                </IconButton>
+                <h2 className={styles.calendarTitle}>{date.toLocaleDateString('ru-RU', { month: 'long', year: 'numeric' })}</h2>
+                <IconButton
+                    aria-label="Arrow-next"
+                    color="inherit"
+                    onClick={handleNextMonth}
+                >
+                    <ArrowForwardIosIcon/>
+                </IconButton>
+            </div>
             <ul className={styles.calendarDays}>
-                {daysArray.map((day) => (
-                    <li key={day} className={styles.dayItem} onClick={() => onClick(day)}>{day}</li>
+                {daysArray.map(({day, dateString})=> (
+                    <li key={day} className={`${styles.dayItem} ${dayHasTasks(dateString) ? styles.dayWithTasks : ''}`} onClick={() => onClick(dateString)}>{day}</li>
                 ))}
             </ul>
         </section>

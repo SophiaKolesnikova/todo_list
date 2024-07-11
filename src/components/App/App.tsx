@@ -27,9 +27,10 @@ const App: React.FC = () => {
         toggleTask: state.toggleTask,
     }));
 
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1;
-    const currentYear = currentDate.getFullYear();
+    const formatDate = (dateString: string) => {
+        const [year, month, day] = dateString.split('-');
+        return `${day}.${month}.${year}`;
+    };
 
     const [modal, setModal] = useState(false);
 
@@ -50,7 +51,7 @@ const App: React.FC = () => {
         }
     }, [selectedDay, setTasks]);
 
-    const handleDayClick = useCallback((day: number): void => {
+    const handleDayClick = useCallback((day: string): void => {
         setSelectedDay(day);
         setModal(true);
     }, [setSelectedDay, setModal]);
@@ -60,39 +61,39 @@ const App: React.FC = () => {
         setModal(false);
     }, [setSelectedDay, setModal]);
 
-
     return (
         <div className={styles.app}>
             <h1 className={styles.appTitle}>Calendar ToDo App</h1>
-            <Calendar month={currentMonth} year={currentYear} onClick={handleDayClick}/>
+            <Calendar onClick={handleDayClick} tasks={tasks}/>
             {modal && (
                 <Modal onClose={handleModalClose}
-                       title={`Todo list ${selectedDay}.${currentMonth}.${currentYear}`}>
-                        <InputAdd
-                            onAdd={(title) => {
-                                if (title && selectedDay) {
-                                    createTask(title, selectedDay);
-                                }
-                            }}
-                        />
-                        <ul className={styles.tasksList}>
-                            {selectedDay && tasks && tasks[selectedDay]?.map((task) => (
-                                <li className={styles.taskItem}  key={task.id}>
-                                    <InputTask
-                                        id={task.id}
-                                        day={selectedDay}
-                                        title={task.title}
-                                        completed={task.completed}
-                                        onDone={() => toggleTask(task.id, task.completed, selectedDay)}
-                                        onEdited={(newTitle) => updateTask(task.id, newTitle, selectedDay)}
-                                        onRemoved={() => removeTask(task.id, selectedDay)}
-                                    />
-                                </li>
-                            ))}
-                            {selectedDay && tasks[selectedDay]?.length === 0 && (
-                                <p style={{textAlign: 'center'}}>There is no task...</p>
-                            )}
-                        </ul>
+                       title={`Todo list ${selectedDay && formatDate(selectedDay)}`}
+                >
+                    <InputAdd
+                        onAdd={(title) => {
+                            if (title && selectedDay) {
+                                createTask(title, selectedDay);
+                            }
+                        }}
+                    />
+                    <ul className={styles.tasksList}>
+                        {selectedDay && tasks && tasks[selectedDay]?.map((task) => (
+                            <li className={styles.taskItem} key={task.id}>
+                                <InputTask
+                                    id={task.id}
+                                    day={selectedDay}
+                                    title={task.title}
+                                    completed={task.completed}
+                                    onDone={() => toggleTask(task.id, task.completed, selectedDay)}
+                                    onEdited={(newTitle) => updateTask(task.id, newTitle, selectedDay)}
+                                    onRemoved={() => removeTask(task.id, selectedDay)}
+                                />
+                            </li>
+                        ))}
+                        {selectedDay && tasks[selectedDay]?.length === 0 && (
+                            <p style={{textAlign: 'center'}}>There is no task...</p>
+                        )}
+                    </ul>
                 </Modal>
             )}
         </div>

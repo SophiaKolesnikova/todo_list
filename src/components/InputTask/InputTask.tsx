@@ -9,10 +9,10 @@ interface InputTaskProps {
     id: string,
     title: string,
     completed: boolean,
-    day: number | null,
-    onDone: (id: string, completed: boolean, day: number) => void,
-    onEdited: (id: string, title: string, day: number) => void,
-    onRemoved: (id: string, day: number) => void,
+    day: string | null,
+    onDone: (id: string, completed: boolean, day: string) => void,
+    onEdited: (id: string, title: string, day: string) => void,
+    onRemoved: (id: string, day: string) => void,
 }
 
 const InputTask: React.FC<InputTaskProps> = ({id, title, completed, onDone, onEdited, onRemoved, day}) => {
